@@ -9,13 +9,13 @@ const ACTIONS = {
   DESCRIPTION: "description",
   IMAGES: "images",
   INCREMENT_DES_IMG: "increment-des-img",
+  SUCCESS: "success",
+  FAILURE: "failure",
 };
 
 function createReducer(state, action) {
   switch (action.type) {
     case ACTIONS.FIELD:
-      console.log(state);
-      console.log(action.field);
       if (
         action.field === ACTIONS.DESCRIPTION ||
         action.field === ACTIONS.IMAGES
@@ -29,7 +29,6 @@ function createReducer(state, action) {
         }
 
         currentArray[action.key] = action.value;
-        console.log(currentArray);
         return {
           ...state,
           [action.field]: currentArray,
@@ -71,6 +70,25 @@ function createReducer(state, action) {
       };
       break;
 
+    case ACTIONS.SUCCESS:
+      return {
+        ...state,
+        showMessage: true,
+        isSuccessful: true,
+        isSuccessfulMessage: "Successfully added product into the database",
+      };
+      break;
+
+    case ACTIONS.FAILURE:
+      return {
+        ...state,
+        showMessage: true,
+        isSuccessful: false,
+        isSuccessfulMessage:
+          "Unfortunately there was a problem adding your product to the database. Product Name cannot be empty.",
+      };
+      break;
+
     default:
       return state;
       break;
@@ -83,37 +101,52 @@ const initialState = {
   stock: 0,
   description: [],
   images: [],
+  showMessage: false,
+  isSuccessful: false,
+  isSuccessfulMessage: "",
 };
 
 function Create() {
   const [state, dispatch] = useReducer(createReducer, initialState);
 
-  const { name, price, stock, description, images } = state;
+  const {
+    name,
+    price,
+    stock,
+    description,
+    images,
+    showMessage,
+    isSuccessful,
+    isSuccessfulMessage,
+  } = state;
 
   async function onSubmit(e) {
     e.preventDefault();
 
-    const newProduct = {
-      name: name,
-      price: price,
-      stock: stock,
-      description: description,
-      images: images,
-    };
+    if (name !== "") {
+      const newProduct = {
+        name: name,
+        price: price,
+        stock: stock,
+        description: description,
+        images: images,
+      };
 
-    await axios
-      .post("http://localhost:5000/record/add", newProduct)
-      .then((res) => console.log(res.data));
-
-    dispatch(ACTIONS.RESET);
+      await axios
+        .post("http://localhost:5000/record/add", newProduct)
+        .then(dispatch({ type: ACTIONS.RESET }))
+        .then(dispatch({ type: ACTIONS.SUCCESS }));
+    } else {
+      dispatch({ type: ACTIONS.FAILURE });
+    }
   }
 
   return (
-    <div>
+    <div className="create-product flex-column flex-center">
       <h3>Create New Product</h3>
       <form onSubmit={onSubmit}>
         <div>
-          <label htmlFor="">Product Name: </label>
+          <p htmlFor="">Product Name: </p>
           <input
             type="text"
             value={name}
@@ -127,7 +160,7 @@ function Create() {
           />
         </div>
         <div>
-          <label htmlFor="">Product Price: </label>
+          <p htmlFor="">Product Price: </p>
           <input
             type="number"
             value={price}
@@ -141,7 +174,7 @@ function Create() {
           />
         </div>
         <div>
-          <label htmlFor="">Product Stock: </label>
+          <p htmlFor="">Product Stock: </p>
           <input
             type="number"
             value={stock}
@@ -155,14 +188,16 @@ function Create() {
           />
         </div>
         <div>
-          <label htmlFor="">Product Description: </label>
+          <p htmlFor="">Product Description: </p>
           {description.map((des, key) => {
             return (
               <>
-                <input
+                <textarea
                   key={key}
                   type="text"
                   value={des}
+                  rows="4"
+                  cols="40"
                   onChange={(e) =>
                     dispatch({
                       type: ACTIONS.FIELD,
@@ -175,26 +210,29 @@ function Create() {
               </>
             );
           })}
-          <button
-            onClick={() =>
-              dispatch({
-                type: ACTIONS.INCREMENT_DES_IMG,
-                field: ACTIONS.DESCRIPTION,
-              })
-            }
-          >
-            Add New Description
-          </button>
         </div>
+        <button
+          type="button"
+          onClick={() =>
+            dispatch({
+              type: ACTIONS.INCREMENT_DES_IMG,
+              field: ACTIONS.DESCRIPTION,
+            })
+          }
+        >
+          Add New Description
+        </button>
         <div>
-          <label htmlFor="">Product Images: </label>
+          <p htmlFor="">Product Images: </p>
           {images.map((des, key) => {
             return (
               <>
-                <input
+                <textarea
                   key={key}
                   type="text"
                   value={des}
+                  rows="4"
+                  cols="40"
                   onChange={(e) =>
                     dispatch({
                       type: ACTIONS.FIELD,
@@ -207,18 +245,35 @@ function Create() {
               </>
             );
           })}
-          <button
-            onClick={() =>
-              dispatch({
-                type: ACTIONS.INCREMENT_DES_IMG,
-                field: ACTIONS.IMAGES,
-              })
-            }
-          >
-            Add New Image
-          </button>
         </div>
-        <button type="submit">Create Product</button>
+        <button
+          type="button"
+          onClick={() =>
+            dispatch({
+              type: ACTIONS.INCREMENT_DES_IMG,
+              field: ACTIONS.IMAGES,
+            })
+          }
+        >
+          Add New Image
+        </button>
+        <br />
+        <br />
+        <br />
+        <button className="flex-center" type="submit">
+          Create Product
+        </button>
+        <br />
+        <br />
+        {showMessage ? (
+          <>
+            {isSuccessful ? (
+              <div style={{ color: "green" }}>{isSuccessfulMessage}</div>
+            ) : (
+              <div style={{ color: "red" }}>{isSuccessfulMessage}</div>
+            )}
+          </>
+        ) : null}
       </form>
     </div>
   );
