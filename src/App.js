@@ -38,7 +38,7 @@ function appReducer(state, action) {
     case ACTIONS.INSTANTIATE_PRODUCT_TO_SHOW:
       return {
         ...state,
-        productToShow: action.products,
+        productToShow: state.productData,
       };
       break;
 
@@ -142,7 +142,6 @@ function App() {
         });
         dispatch({
           type: ACTIONS.INSTANTIATE_PRODUCT_TO_SHOW,
-          products: res.data,
         });
       });
     } catch (error) {

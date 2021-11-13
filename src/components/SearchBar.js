@@ -15,6 +15,11 @@ function SearchBar() {
         onChange={(e) =>
           dispatch({ type: ACTIONS.SEARCH, value: e.target.value })
         }
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            dispatch({ type: ACTIONS.UPDATE_PRODUCT_TO_SHOW });
+          }
+        }}
         value={state.search}
       />
       <button
