@@ -1,33 +1,20 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import ProductCard from "./ProductCard";
 
+import ACTIONS from "../App";
+import { StateContext, DispatchContext } from "../App";
+
 function ProductList() {
-  const [productData, setProductData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useContext(DispatchContext);
+  const state = useContext(StateContext);
 
-  useEffect(() => {
-    instatiateProductCardData();
-    setIsLoading(false);
-  }, []);
-
-  async function instatiateProductCardData() {
-    try {
-      await axios.get("http://localhost:5000/record/").then((res) => {
-        setProductData({ products: res.data });
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const { productData, productToShow, search } = state;
 
   return (
     <div className="product-list margin-all-1rem">
-      {!isLoading
-        ? productData.products?.map((product) => {
-            return <ProductCard key={product._id} product={product} />;
-          })
-        : null}
+      {productToShow.map((product) => {
+        return <ProductCard key={product._id} product={product} />;
+      })}
     </div>
   );
 }

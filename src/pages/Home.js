@@ -22,7 +22,6 @@ function Home() {
         {isToggledCreate ? "Close" : "Create New Product"}
       </div>
       {isToggledCreate ? <Create /> : null}
-
       <ProductList />
     </div>
   );

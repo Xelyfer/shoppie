@@ -1,17 +1,22 @@
-import { useReducer, createContext } from "react";
+import { useReducer, createContext, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import axios from "axios";
 
 import "./App.css";
 import Header from "./components/Header";
 
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
+import { breadcrumbsClasses } from "@mui/material";
 
 export const ACTIONS = {
   TOGGLE_CREATE: "toggle-create",
-  INSTATIATE_PRODUCT_CARD: "instatiate-product-card",
+  INSTANTIATE_PRODUCT_DATA: "instantitate-product-data",
+  INSTANTIATE_PRODUCT_TO_SHOW: "instantitate-product-to-show",
   ADD_TO_CART: "add-to-cart",
   DELETE_FROM_CART: "delete-from-cart",
+  SEARCH: "search",
+  UPDATE_PRODUCT_TO_SHOW: "update-product-to-show",
 };
 
 function appReducer(state, action) {
@@ -23,10 +28,17 @@ function appReducer(state, action) {
       };
       break;
 
-    case ACTIONS.INSTATIATE_PRODUCT_CARD:
+    case ACTIONS.INSTANTIATE_PRODUCT_DATA:
       return {
         ...state,
-        isLoading: true,
+        productData: action.products,
+      };
+      break;
+
+    case ACTIONS.INSTANTIATE_PRODUCT_TO_SHOW:
+      return {
+        ...state,
+        productToShow: action.products,
       };
       break;
 
@@ -78,6 +90,25 @@ function appReducer(state, action) {
       };
       break;
 
+    case ACTIONS.SEARCH:
+      return {
+        ...state,
+        search: action.value,
+      };
+      break;
+
+    case ACTIONS.UPDATE_PRODUCT_TO_SHOW:
+      const regexp = new RegExp(state.search, "i");
+      const newArray = state.productData.filter((product) => {
+        return regexp.test(product.name);
+      });
+
+      return {
+        ...state,
+        productToShow: newArray,
+      };
+      break;
+
     default:
       return state;
       break;
@@ -86,8 +117,10 @@ function appReducer(state, action) {
 
 const initialState = {
   isToggledCreate: false,
-  isLoading: false,
   cart: [],
+  search: "",
+  productData: [],
+  productToShow: [],
 };
 
 export const StateContext = createContext();
@@ -95,6 +128,27 @@ export const DispatchContext = createContext();
 
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
+
+  useEffect(() => {
+    instantiateProductCardData();
+  }, []);
+
+  async function instantiateProductCardData() {
+    try {
+      await axios.get("http://localhost:5000/record/").then((res) => {
+        dispatch({
+          type: ACTIONS.INSTANTIATE_PRODUCT_DATA,
+          products: res.data,
+        });
+        dispatch({
+          type: ACTIONS.INSTANTIATE_PRODUCT_TO_SHOW,
+          products: res.data,
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <DispatchContext.Provider value={dispatch}>
