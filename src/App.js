@@ -1,6 +1,8 @@
 import { useReducer, createContext, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import axios from "axios";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 import "./App.css";
 import Header from "./components/Header";
@@ -18,6 +20,13 @@ export const ACTIONS = {
   SEARCH: "search",
   UPDATE_PRODUCT_TO_SHOW: "update-product-to-show",
 };
+
+export const getCartTotal = (cart) =>
+  cart?.reduce(
+    (prevAmount, currentItem) =>
+      currentItem.product.price * currentItem.quantity + prevAmount,
+    0
+  );
 
 function appReducer(state, action) {
   switch (action.type) {
@@ -126,6 +135,10 @@ const initialState = {
 export const StateContext = createContext();
 export const DispatchContext = createContext();
 
+const stripePromise = loadStripe(
+  "pk_test_51JvEMoFY4bKZy24wPj9Xqegi0QPgrc4WIcGFbM22fIP53ZLeFFp1AiX3lziLeH0sQDMyW704XmQdbcLcK3pzS47m00mtXOt1xV"
+);
+
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
@@ -159,7 +172,9 @@ function App() {
               <Home />
             </Route>
             <Route path="/checkout">
-              <Checkout />
+              <Elements stripe={stripePromise}>
+                <Checkout />
+              </Elements>
             </Route>
           </Switch>
         </div>

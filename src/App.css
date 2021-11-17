@@ -209,6 +209,15 @@ a {
   padding: 1rem;
 }
 
+.payment {
+  width: 100%;
+}
+
+.payment > form {
+  width: 100%;
+  margin: 1rem 0;
+}
+
 /*  //////////////////////////////// CREATE PRODUCT ///////////////////////////////  */
 
 .create-product {
