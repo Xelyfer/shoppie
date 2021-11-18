@@ -13,14 +13,14 @@ function Home() {
 
   return (
     <div className="home flex-column flex-center">
-      <div
+      <button
         className="button flex-center box-shadow-white"
         onClick={() => {
           dispatch({ type: ACTIONS.TOGGLE_CREATE });
         }}
       >
         {isToggledCreate ? "Close" : "Create New Product"}
-      </div>
+      </button>
       {isToggledCreate ? <Create /> : null}
       <ProductList />
     </div>

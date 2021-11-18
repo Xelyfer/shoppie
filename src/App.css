@@ -213,9 +213,14 @@ a {
   width: 100%;
 }
 
-.payment > form {
+.payment-form {
   width: 100%;
-  margin: 1rem 0;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.payment-button-buy {
+  width: 50%;
 }
 
 /*  //////////////////////////////// CREATE PRODUCT ///////////////////////////////  */

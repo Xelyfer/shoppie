@@ -14,6 +14,7 @@ function ProductCard({ product }) {
       <p>${product.price}</p>
       <p>Remaining: {product.stock}</p>
       <button
+        className="button box-shadow-white"
         onClick={() =>
           dispatch({ type: ACTIONS.ADD_TO_CART, product: product, quantity: 1 })
         }

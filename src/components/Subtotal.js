@@ -16,7 +16,7 @@ function Subtotal() {
       <span>
         {`Subtotal (${quantity} ${quantity > 1 ? "items" : "item"}):`}
       </span>
-      <span>${getCartTotal(cart)}</span>
+      <span>${getCartTotal(cart)} NZD</span>
     </div>
   );
 }

@@ -5,26 +5,6 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 import { getCartTotal, StateContext } from "../App";
 
-const CARD_OPTIONS = {
-  iconStyle: "solid",
-  style: {
-    base: {
-      iconColor: "#c4f0ff",
-      color: "#fff",
-      fontWeight: 500,
-      fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-      fontSize: "16px",
-      fontSmoothing: "antialiased",
-      ":-webkit-autofill": { color: "#fce883" },
-      "::placeholder": { color: "#87bbfd" },
-    },
-    invalid: {
-      iconColor: "#ffc7ee",
-      color: "#ffc7ee",
-    },
-  },
-};
-
 function PaymentForm() {
   const state = useContext(StateContext);
   const { cart } = state;
@@ -70,15 +50,17 @@ function PaymentForm() {
   return (
     <div className="payment flex-column flex-center">
       {!success ? (
-        <form onSubmit={handleSubmit}>
+        <form className="payment-form flex-column" onSubmit={handleSubmit}>
           <fieldset>
-            <div>
+            <div className="payment-element">
               <CardElement></CardElement>
             </div>
           </fieldset>
-          <button disabled={isDisabled}>
-            {!isDisabled ? "Buy Products" : "Checking Card"}
-          </button>
+          <div className="flex-column flex-center">
+            <button className="button box-shadow-white" disabled={isDisabled}>
+              {!isDisabled ? "Buy Products" : "Checking Card"}
+            </button>
+          </div>
         </form>
       ) : (
         <h2>Purchase Successful</h2>
