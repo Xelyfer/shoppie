@@ -133,7 +133,10 @@ function Create() {
       };
 
       await axios
-        .post("http://localhost:5000/record/add", newProduct)
+        .post(
+          "https://shoppie-server-xelyfer.herokuapp.com/record/add",
+          newProduct
+        )
         .then(dispatch({ type: ACTIONS.RESET }))
         .then(dispatch({ type: ACTIONS.SUCCESS }));
     } else {

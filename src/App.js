@@ -148,15 +148,17 @@ function App() {
 
   async function instantiateProductCardData() {
     try {
-      await axios.get("http://localhost:5000/record/").then((res) => {
-        dispatch({
-          type: ACTIONS.INSTANTIATE_PRODUCT_DATA,
-          products: res.data,
+      await axios
+        .get("https://shoppie-server-xelyfer.herokuapp.com/record/")
+        .then((res) => {
+          dispatch({
+            type: ACTIONS.INSTANTIATE_PRODUCT_DATA,
+            products: res.data,
+          });
+          dispatch({
+            type: ACTIONS.INSTANTIATE_PRODUCT_TO_SHOW,
+          });
         });
-        dispatch({
-          type: ACTIONS.INSTANTIATE_PRODUCT_TO_SHOW,
-        });
-      });
     } catch (error) {
       console.log(error);
     }
