@@ -13,15 +13,18 @@ function Home() {
 
   return (
     <div className="home flex-column flex-center">
-      <button
-        className="button flex-center box-shadow-white"
-        onClick={() => {
-          dispatch({ type: ACTIONS.TOGGLE_CREATE });
-        }}
-      >
-        {isToggledCreate ? "Close" : "Create New Product"}
-      </button>
-      {isToggledCreate ? <Create /> : null}
+      <div className="create-button">
+        <button
+          className="button flex-center box-shadow-white"
+          onClick={() => {
+            dispatch({ type: ACTIONS.TOGGLE_CREATE });
+          }}
+        >
+          {isToggledCreate ? "Close" : "Create New Product"}
+        </button>
+        {isToggledCreate ? <Create /> : null}
+      </div>
+
       <ProductList />
     </div>
   );
