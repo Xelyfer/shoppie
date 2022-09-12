@@ -13,7 +13,7 @@ function Home() {
 
   return (
     <div className="home flex-column flex-center">
-      <div className="create-button">
+      {/* <div className="create-button">
         <button
           className="button flex-center box-shadow-white"
           onClick={() => {
@@ -23,7 +23,7 @@ function Home() {
           {isToggledCreate ? "Close" : "Create New Product"}
         </button>
         {isToggledCreate ? <Create /> : null}
-      </div>
+      </div> */}
 
       <ProductList />
     </div>

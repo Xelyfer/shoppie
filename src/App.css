@@ -87,6 +87,11 @@ a {
   user-select: none;
 }
 
+.disable-button{
+  background-color: grey;
+  pointer-events: none;
+}
+
 .box-shadow-white {
   box-shadow: 0 0 5px var(--clr-bg-header);
 }
@@ -151,6 +156,10 @@ a {
   line-height: 1.5rem;
   padding: 0.5rem;
   text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
 }
 
 .product-card > img {

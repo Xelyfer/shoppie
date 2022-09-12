@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import ProductCard from "./ProductCard";
 
 import ACTIONS from "../App";
@@ -9,6 +9,7 @@ function ProductList() {
   const state = useContext(StateContext);
 
   const { productData, productToShow, search } = state;
+  const [remaining, setRemaining] = useState(0);
 
   return (
     <div className="product-list margin-all-1rem">
