@@ -9,16 +9,22 @@ function ProductCard({ product }) {
 
   const [isAvailable, setIsAvailable] = useState(false);
 
-  useEffect(async () => {
-    await axios
-      .get(`https://shoppie-server-xelyfer.herokuapp.com/record/${product._id}`)
-      .then((res) => {
-        if (parseInt(res.data.stock) > 0) {
-          setIsAvailable(true);
-        } else {
-          setIsAvailable(false);
-        }
-      });
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get(
+          `https://shoppie-server-xelyfer.herokuapp.com/record/${product._id}`
+        )
+        .then((res) => {
+          if (parseInt(res.data.stock) > 0) {
+            setIsAvailable(true);
+          } else {
+            setIsAvailable(false);
+          }
+        });
+    }
+
+    fetchData();
   }, []);
 
   return (

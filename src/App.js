@@ -9,7 +9,6 @@ import Header from "./components/Header";
 
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
-import { breadcrumbsClasses } from "@mui/material";
 
 export const ACTIONS = {
   TOGGLE_CREATE: "toggle-create",
