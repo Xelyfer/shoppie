@@ -6,7 +6,7 @@ import { DispatchContext, ACTIONS } from "../App";
 
 function ProductCard({ product }) {
   const dispatch = useContext(DispatchContext);
-  // const state = useContext(StateContext);
+  // const state = useContext(StateContex);
 
   const [isAvailable, setIsAvailable] = useState(false);
 
