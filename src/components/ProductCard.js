@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 
-import { DispatchContext, StateContext, ACTIONS } from "../App";
+import { DispatchContext, ACTIONS } from "../App";
+// import { DispatchContext, StateContext, ACTIONS } from "../App";
 
 function ProductCard({ product }) {
   const dispatch = useContext(DispatchContext);
-  const state = useContext(StateContext);
+  // const state = useContext(StateContext);
 
   const [isAvailable, setIsAvailable] = useState(false);
 
@@ -25,11 +26,11 @@ function ProductCard({ product }) {
     }
 
     fetchData();
-  }, []);
+  }, [product._id]);
 
   return (
     <div className="product-card">
-      <img src={product?.images[0]} alt="image" />
+      <img src={product?.images[0]} alt="" />
       <h4>{product.name}</h4>
       <p>{product?.description[0]}</p>
       <p>${product.price}</p>

@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
+// import React, { useContext } from "react";
 
-import Create from "../components/Create";
+// import Create from "../components/Create";
 import ProductList from "../components/ProductList";
 
-import { StateContext, DispatchContext, ACTIONS } from "../App";
+// import { StateContext, DispatchContext, ACTIONS } from "../App";
 
 function Home() {
-  const dispatch = useContext(DispatchContext);
-  const state = useContext(StateContext);
+  // const dispatch = useContext(DispatchContext);
+  // const state = useContext(StateContext);
 
-  const { isToggledCreate, isLoading, productData, cart } = state;
+  // const { isToggledCreate, isLoading, productData, cart } = state;
 
   return (
     <div className="home flex-column flex-center">

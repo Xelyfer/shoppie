@@ -21,12 +21,13 @@ function ShoppingCartList() {
             {cart.map((item, key) => {
               return (
                 <div key={key} className="shopping-cart-list-item flex-row">
-                  <img src={item.product?.images[0]}></img>
+                  <img src={item.product?.images[0]} alt=""></img>
                   <div>
                     <h4>{item.product?.name}</h4>
                     <div className="shopping-cart-list-item-quantity flex-row">
                       <p>Quantity: {item.quantity}</p>
                       <a
+                        href
                         onClick={() => {
                           dispatch({
                             type: ACTIONS.DELETE_FROM_CART,

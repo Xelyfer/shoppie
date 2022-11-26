@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 
-import { ACTIONS, DispatchContext, StateContext } from "../App";
+import { StateContext } from "../App";
+// import { ACTIONS, DispatchContext, StateContext } from "../App";
 import ShoppingCartList from "../components/ShoppingCartList";
 import Subtotal from "../components/Subtotal";
 import Payment from "../components/PaymentForm";
 
 function Checkout() {
-  const dispatch = useContext(DispatchContext);
+  // const dispatch = useContext(DispatchContext);
   const state = useContext(StateContext);
 
   const { cart } = state;
