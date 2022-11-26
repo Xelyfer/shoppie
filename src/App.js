@@ -148,7 +148,7 @@ function App() {
   async function instantiateProductCardData() {
     try {
       await axios
-        .get("https://shoppie-server-xelyfer.herokuapp.com/record/")
+        .get("https://xelyfer-shoppie-server.onrender.com/record/")
         .then((res) => {
           dispatch({
             type: ACTIONS.INSTANTIATE_PRODUCT_DATA,

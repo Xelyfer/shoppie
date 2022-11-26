@@ -13,7 +13,7 @@ function ProductCard({ product }) {
     async function fetchData() {
       await axios
         .get(
-          `https://shoppie-server-xelyfer.herokuapp.com/record/${product._id}`
+          `https://xelyfer-shoppie-server.onrender.com/record/${product._id}`
         )
         .then((res) => {
           if (parseInt(res.data.stock) > 0) {

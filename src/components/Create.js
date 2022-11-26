@@ -134,7 +134,7 @@ function Create() {
 
       await axios
         .post(
-          "https://shoppie-server-xelyfer.herokuapp.com/record/add",
+          "https://xelyfer-shoppie-server.onrender.com/record/add",
           newProduct
         )
         .then(dispatch({ type: ACTIONS.RESET }))

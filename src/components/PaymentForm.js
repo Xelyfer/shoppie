@@ -27,7 +27,7 @@ function PaymentForm() {
         const { id } = paymentMethod;
         const amount = getCartTotal(cart) * 100;
         const response = await axios.post(
-          "https://shoppie-server-xelyfer.herokuapp.com/create-session-payment",
+          "https://xelyfer-shoppie-server.onrender.com/create-session-payment",
           {
             amount,
             id,
